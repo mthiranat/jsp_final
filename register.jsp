@@ -3,6 +3,7 @@
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
+<%@ include file="config.jsp" %>
 <%
 
 Object user_id = session.getAttribute("user_id");
@@ -18,7 +19,7 @@ String error_text = null;
 if ("POST".equalsIgnoreCase(request.getMethod())) {
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
-		connect =  DriverManager.getConnection("jdbc:mysql://localhost/jsp_final" +"?user=root&password=");
+		connect =  DriverManager.getConnection("jdbc:mysql://" + mysql_host + "/" + mysql_db + "" +"?user=" + mysql_username + "&password=" + mysql_password);
 		statement = connect.createStatement();
 		if (!statement.executeQuery("SELECT * FROM `users` WHERE `username` = '" + request.getParameter("username") + "';").next()) {
 			if (request.getParameter("password").equals(request.getParameter("confirm_password"))) {
